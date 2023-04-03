@@ -55,15 +55,17 @@ public class YoutubeTranscriptService {
 				new ParameterizedTypeReference<>() {
 				});
 
-		List<Transcript> transcripts = responseEntity.getBody();
-		Youtube youtube = new Youtube();
-		youtube.setYoutubeId(youtubeId);
-		youtube.setTranscriptList(transcripts);
+		if (responseEntity.getStatusCode().is2xxSuccessful()) {
+			List<Transcript> transcripts = responseEntity.getBody();
+			Youtube youtube = new Youtube();
+			youtube.setYoutubeId(youtubeId);
+			youtube.setTranscriptList(transcripts);
 
-		transcriptYoutubeRepository.insert(youtube);
-		// TODO check this logic later we might change mongo to elastic search
-		transcripts.forEach(e -> e.setYoutubeId(youtubeId));
-		transcriptMongoRepository.saveAll(transcripts);
+			transcriptYoutubeRepository.insert(youtube);
+			// TODO check this logic later we might change mongo to elastic search
+			transcripts.forEach(e -> e.setYoutubeId(youtubeId));
+			transcriptMongoRepository.saveAll(transcripts);
+		}
 
 	}
 }

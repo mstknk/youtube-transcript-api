@@ -35,7 +35,7 @@ public class YoutubeTranscriptController {
 	}
 
 	@PostMapping(path = "/transcript/{youtubeId}", produces = "application/json")
-	public ResponseEntity StoreTranscript(@PathVariable String youtubeId) {
+	public ResponseEntity storeTranscript(@PathVariable String youtubeId) {
 		youtubeTranscriptService.store(youtubeId);
 		return ResponseEntity.ok().build();
 	}
